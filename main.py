@@ -21,7 +21,33 @@ async def cmd_check_user_id(message: Message):
 
 @dp.message(F.text == 'Пивет')
 async def cmd_check_user_id(message: Message):
-    await message.answer('Привет, маленький пенис')
+    await message.answer('Hello, little bro ')
+
+
+@dp.message(F.text == '/send_image')
+async def cmd_send_image(message: Message):
+    await message.answer_photo(
+        photo='AgACAgIAAxkBAAM2ZRLkiyU-Zrt68Vy81-taatJ-rZkAAo_YMRukRZFIvRVDiFVk_NoBAAMCAAN5AAMwBA',
+        caption='Photo sending example')
+
+
+@dp.message(F.photo)
+async def cmd_get_photo_id(message: Message):
+    await message.answer(message.photo[-1].file_id)
+
+
+@dp.message(F.document)
+async def cmd_get_doc_id(message: Message):
+    try:
+        await bot.send_document(chat_id='408818548', document=message.document.file_id)
+        await message.answer('File was sent')
+    except Exception as err:
+        await message.answer(f'File was not sent {err}')
+
+
+@dp.message(F.text == '/send_doc')
+async def cmd_send_doc(message: Message):
+    await message.answer_document(document='BQACAgIAAxkBAAM9ZRLofOuJKubzJQrnMhV8W-ZfdYAAApc6AAK5bJhIgHUTcjZsaOgwBA')
 
 
 @dp.message()
@@ -35,4 +61,7 @@ async def main():
 
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        print('Exit')
