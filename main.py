@@ -1,6 +1,6 @@
 import asyncio
 from aiogram import Bot, Dispatcher, F
-from aiogram.types import Message
+from aiogram.types import Message, CallbackQuery
 
 import keyboards as kb
 
@@ -55,6 +55,17 @@ async def cmd_get_doc_id(message: Message):
 @dp.message(F.text == '/send_doc')
 async def cmd_send_doc(message: Message):
     await message.answer_document(document='BQACAgIAAxkBAAM9ZRLofOuJKubzJQrnMhV8W-ZfdYAAApc6AAK5bJhIgHUTcjZsaOgwBA')
+
+
+@dp.message(F.text == 'Catalog')
+async def cmd_get_catalog(message: Message):
+    await message.answer('Choose an item', reply_markup=kb.catalog)
+
+
+@dp.callback_query(F.data == 'anime')
+async def cb_anime(callback: CallbackQuery):
+    await callback.answer(f'You chose {callback.data}', show_alert=True)
+    # await callback.message.answer(f'You chose {callback.data}')
 
 
 @dp.message()
