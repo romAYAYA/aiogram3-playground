@@ -1,8 +1,19 @@
 from aiogram import Router, F
 from aiogram.types import Message, CallbackQuery
+from aiogram.filters import Filter
 import app.keyboards as kb
 
 router = Router()
+
+
+class Admin(Filter):
+    async def __call__(self, message: Message) -> bool:
+        return message.from_user.id in [418009489, 143]
+
+
+@router.message(Admin(), F.text == '/admin')
+async def cmd_admin(message: Message):
+    await message.answer('You\'re admin')
 
 
 @router.message(F.text == '/start')
