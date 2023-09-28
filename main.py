@@ -2,13 +2,20 @@ import asyncio
 from aiogram import Bot, Dispatcher, F
 from aiogram.types import Message
 
+import keyboards as kb
+
 bot = Bot(token='6297836283:AAGEaCSnuxlFJmc5a52s09uWJABvsRVAOe8')
 dp = Dispatcher()
 
 
 @dp.message(F.text == '/start')
 async def cmd_start(message: Message):
-    await message.answer('Welcome, my lil bro')
+    await message.answer('Welcome, my lil bro', reply_markup=kb.main)
+
+
+@dp.message(F.text == 'Contacts')
+async def cmd_get_contacts(message: Message):
+    await message.answer('Contacts: ', reply_markup=kb.socials)
 
 
 @dp.message(F.text == '/check_id')
